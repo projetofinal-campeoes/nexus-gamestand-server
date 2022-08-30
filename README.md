@@ -30,7 +30,7 @@ O url base da API é https://nexus-gamestand-server.herokuapp.com
 
 Caso dê tudo certo, a resposta será assim:
 
-`POST /register -  FORMATO DA RESPOSTA - STATUS 201`
+`POST /register - FORMATO DA RESPOSTA - STATUS 201`
 ```json
 {
 "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV4ZW1wbG9AbWFpbC5jb20iLCJpYXQiOjE2NjE4NzUyODMsImV4cCI6MTY2MTg3ODg4Mywic3ViIjoiNiJ9.IZLD9IX961fQ_FSDH34z7bAyKWLQ1VrXbG5sOHTTRXQ",
