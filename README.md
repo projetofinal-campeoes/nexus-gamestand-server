@@ -46,8 +46,7 @@ Caso dê tudo certo, a resposta será assim:
 
 Email já cadastrado:
 
-`POST /register - `
-``  FORMATO DA RESPOSTA - STATUS 400``
+`POST /register - `FORMATO DA RESPOSTA - STATUS 400`
 ```json
 {
   "status": "error",
