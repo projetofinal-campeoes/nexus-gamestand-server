@@ -19,7 +19,7 @@ O url base da API é https://nexus-gamestand-server.herokuapp.com
 
 <h2 align="center"> Criação de usuário </h2>
 
-`POST /register -  FORMATO DA REQUISIÇÃO`
+`POST /register - FORMATO DA REQUISIÇÃO`
 ```json
 {
 "email": "exemplo@email.com",
