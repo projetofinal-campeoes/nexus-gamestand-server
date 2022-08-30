@@ -42,7 +42,7 @@ Caso dê tudo certo, a resposta será assim:
 }
 ```
 
-<h2 align="center"> Possíveis erros <h2>
+<h2 align="center"> Possíveis erros </h2>
 
 Email já cadastrado:
 
@@ -59,7 +59,7 @@ Email já cadastrado:
 `POST /login - FORMATO DA REQUISIÇÂO`
 ```json
 {
-"email": "example@email.com",
+"email": "exemplo@email.com",
 "password": "123456"
 }
 ```
