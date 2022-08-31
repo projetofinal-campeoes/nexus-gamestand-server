@@ -159,6 +159,7 @@ Caso dê tudo certo, a resposta será assim:
 	"userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJcerX6FFwOsAN-fVC24kFXpz0dZNvAjFUazzeEoqEag&s"
 }
 ```
+<h1 align="center">👥 Desenvolvedores responsáveis 👥</h1> 
 <table align="center">
   <tr>
     <td align="center">
