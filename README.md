@@ -214,25 +214,3 @@ Caso dê tudo certo, a resposta será assim:
   </tr>
 </table>
 
-<h1 align="center">👥 Já participaram do projeto 👥</h1> 
-<table align="center">
-  <tr>
-    <td align="center">
-        <img src="https://avatars.githubusercontent.com/u/88001200?v=4" width="100px;" alt="Foto do Welton"/><br>        
-        <sub>
-          <b>Welton Santos</b> <br/>
-            <a href="https://github.com/WeltonSantosFr" target="_blank"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" target="_blank"/>
-                <a href="https://www.linkedin.com/in/welton-santos-7a2b7b214/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"/>
-        </sub>
-    </td>
-      <td align="center">
-        <img src="https://i.imgur.com/yVKFKmI.png" width="100px;" alt="Foto da Katya"/><br>          
-        <sub>
-          <b>Katya Keila</b>  <br/>
-            <a href="https://github.com/katyakeila" target="_blank"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" target="_blank"/>
-                <a href="https://www.linkedin.com/in/katya-oliveira/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"/>
-        </sub>
-    </td>
-  </tr>
-</table>
-
