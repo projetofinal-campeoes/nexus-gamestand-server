@@ -8,14 +8,18 @@ datasource db {
 }
 
 model User {
-  id           String         @id @default(uuid())
-  username     String
-  avatar_url   String
-  email        String
-  password     String
-  status       Boolean
-  steam_user   String
-  gamepass     Boolean
+  id         String  @id @default(uuid())
+  username   String  @unique @db.VarChar(32)
+  avatar_url String? 
+  email      String  @unique @db.VarChar(128)
+  password   String  @db.VarChar(128)
+  status     Boolean @default(true)
+  steam_user String  @db.VarChar(32)
+  gamepass   Boolean @default(false)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
   friends      Friends[]
   promotions   Promotions[]
   custom_games Custom_games[]
