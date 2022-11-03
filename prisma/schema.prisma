@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String         @id @default(uuid())
+  username     String
+  avatar_url   String
+  email        String
+  password     String
+  status       Boolean
+  steam_user   String
+  gamepass     Boolean
+  friends      Friends[]
+  promotions   Promotions[]
+  custom_games Custom_games[]
+
+  @@map("user")
+}
+
+model Friends {
+  id     String  @id @default(uuid())
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
+  @@map("friends")
+}
+
+model Custom_games {
+  id        String  @id @default(uuid())
+  name      String
+  image_url String
+  platform  String
+  User      User?   @relation(fields: [userId], references: [id])
+  userId    String?
+
+  @@map("custom_games")
+}
+
+model Promotions {
+  id     String  @id @default(uuid())
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
+  @@map("promotions")
+}
