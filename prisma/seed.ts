@@ -1,3 +1,4 @@
+import { hashSync } from 'bcryptjs';
 // prisma/seed.ts
 
 import { PrismaClient } from '@prisma/client';
@@ -12,7 +13,7 @@ async function main() {
       username: 'mathsudre',
       avatar_url: '',
       email: 'math@email.com',
-      password: 'Teste@123',
+      password: hashSync('Teste@654', 10),
       steam_user: 'mathsudre',
       gamepass: true,
     },
@@ -25,7 +26,7 @@ async function main() {
       username: 'luwny',
       avatar_url: '',
       email: 'adam@email.com',
-      password: 'Teste@123',
+      password: hashSync('Teste@321', 10),
       steam_user: 'luwny',
       gamepass: true,
     },
@@ -42,3 +43,5 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
+
+ //yarn prisma db seed 
