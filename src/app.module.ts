@@ -1,29 +1,32 @@
-import { ensureOwnerMiddleware } from './common/middlewares/ensureOwner.middleware';
-import { UsersController } from './users/users.controller';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { ensureAuthMiddleware } from './common/middlewares/ensureAuth.middleware';
-import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { PrismaModule } from './prisma/prisma.module';
+import { UsersController } from './users/users.controller';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [PrismaModule, UsersModule],
+  imports: [PrismaModule, UsersModule, AuthModule],
   controllers: [],
   providers: [],
 })
-export class AppModule  {
- /*  configure(consumer: MiddlewareConsumer) {
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(ensureAuthMiddleware)
-      .exclude({ path: 'user', method: RequestMethod.POST})
+      .exclude(
+        { path: 'users', method: RequestMethod.POST },
+        { path: 'users', method: RequestMethod.GET },
+        { path: 'users/:id', method: RequestMethod.GET },
+      )
       .forRoutes(UsersController);
-    
-    consumer
+
+    /*  consumer
       .apply(ensureAuthMiddleware,ensureOwnerMiddleware)
       .exclude(
-        { path: 'user', method: RequestMethod.POST},
-        { path: 'user', method: RequestMethod.POST}
+        { path: 'users', method: RequestMethod.POST},
+        { path: 'users', method: RequestMethod.POST}
       )
-      .forRoutes(UsersController)
-  } */
-
+      .forRoutes(UsersController) */
+  }
 }

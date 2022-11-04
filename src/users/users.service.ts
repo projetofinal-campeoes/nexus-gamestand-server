@@ -3,6 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { hashSync } from 'bcryptjs';
 import { PrismaService } from './../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -30,7 +31,10 @@ export class UsersService {
     }
 
      
-    const newUser = await this.prisma.user.create({ data: createUserDto });
+    const newUser = await this.prisma.user.create({ data:{
+      ...createUserDto,
+      password:hashSync(createUserDto.password, 10)
+    }});
 
     return newUser
   }
