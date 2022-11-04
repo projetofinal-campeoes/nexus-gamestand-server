@@ -1,12 +1,13 @@
 import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { ensureAuthMiddleware } from './common/middlewares/ensureAuth.middleware';
 import { PrismaModule } from './prisma/prisma.module';
-import { UsersController } from './users/users.controller';
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
+import { UsersController } from './routes/users/users.controller';
+import { UsersModule } from './routes/users/users.module';
+import { AuthModule } from './routes/auth/auth.module';
+import { CustomGamesModule } from './routes/custom_games/custom_games.module';
 
 @Module({
-  imports: [PrismaModule, UsersModule, AuthModule],
+  imports: [PrismaModule, UsersModule, AuthModule, CustomGamesModule],
   controllers: [],
   providers: [],
 })
