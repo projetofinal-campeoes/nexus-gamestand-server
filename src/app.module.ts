@@ -5,6 +5,7 @@ import { UsersController } from './routes/users/users.controller';
 import { UsersModule } from './routes/users/users.module';
 import { AuthModule } from './routes/auth/auth.module';
 import { CustomGamesModule } from './routes/custom_games/custom_games.module';
+import { CustomGamesController } from './routes/custom_games/custom_games.controller';
 
 @Module({
   imports: [PrismaModule, UsersModule, AuthModule, CustomGamesModule],
@@ -20,7 +21,8 @@ export class AppModule {
         { path: 'users', method: RequestMethod.GET },
         { path: 'users/:id', method: RequestMethod.GET },
       )
-      .forRoutes(UsersController);
+      .forRoutes(UsersController, CustomGamesController);
+      
 
     /*  consumer
       .apply(ensureAuthMiddleware,ensureOwnerMiddleware)

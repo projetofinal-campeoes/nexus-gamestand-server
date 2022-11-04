@@ -6,7 +6,6 @@ import {
 } from 'class-validator';
 
 export class CreateCustomGameDto {
-  @IsString()
   @ApiProperty()
   id: string;
 
@@ -21,10 +20,10 @@ export class CreateCustomGameDto {
   image_url: string | null;
 
   @IsString()
+  @Length(3, 20)
   @ApiProperty()
   platform: string;
 
-  @IsString()
   @ApiProperty()
   userId: string;
 }
