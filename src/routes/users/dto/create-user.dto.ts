@@ -26,7 +26,8 @@ export class CreateUserDto {
   @IsString()
   @Length(4, 20)
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: 'Password must have one letter UpperCase, one special Character, one Number 0-9',
+    message:
+      'Password must have one letter UpperCase, one special Character, one Number 0-9',
   })
   @ApiProperty()
   password: string;
