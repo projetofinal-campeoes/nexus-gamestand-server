@@ -19,12 +19,12 @@ export class CustomGamesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.customGamesService.findOne(+id);
+    return this.customGamesService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCustomGameDto: UpdateCustomGameDto) {
-    return this.customGamesService.update(+id, updateCustomGameDto);
+    return this.customGamesService.update(id, updateCustomGameDto);
   }
 
   @Delete(':id')

@@ -31,12 +31,14 @@ export class CustomGamesService {
   }
 
   async findOne(id: string) {
-    return "test"
+    return this.prisma.custom_games.findUnique({where: { id }})
   }
 
-  async update(id: string, updateCustomGameDto: UpdateCustomGameDto) {
-    
-    return "test"
+  async update(id: string, updateCustomGameDto: UpdateCustomGameDto) {    
+    return await this.prisma.custom_games.update({
+      where: { id },
+      data: UpdateCustomGameDto
+    })
   }
 
   async delete(id: string) {
@@ -50,7 +52,7 @@ export class CustomGamesService {
       throw new Error('Game does not exists!');
     }
 
-    return await this.prisma.custom_games.delete({
+    return !!await this.prisma.custom_games.delete({
       where: {
         id,
       }

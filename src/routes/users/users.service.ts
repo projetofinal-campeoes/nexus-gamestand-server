@@ -29,7 +29,6 @@ export class UsersService {
     if (uniqueUserName || uniqueUserEmail) {
       throw new BadRequestException('Username or Email is already being used');
     }
-
      
     const newUser = await this.prisma.user.create({ data:{
       ...createUserDto,
