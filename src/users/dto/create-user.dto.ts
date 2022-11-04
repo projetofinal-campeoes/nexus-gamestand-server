@@ -39,4 +39,9 @@ export class CreateUserDto {
   @IsOptional()
   @ApiProperty()
   gamepass: boolean;
+
+  @IsBoolean()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  status: boolean;
 }
