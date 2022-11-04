@@ -3,13 +3,14 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   NotFoundException,
   Param,
   Patch,
   Post,
   UseFilters,
-  HttpCode
 } from '@nestjs/common';
+
 import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { PrismaClientExceptionFilter } from './../prisma-client-exception/prisma-client-exception.filter';
 import { CreateUserDto } from './dto/create-user.dto';
