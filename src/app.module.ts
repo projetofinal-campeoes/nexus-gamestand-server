@@ -1,11 +1,11 @@
 import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
+import { AuthModule } from './auth/auth.module';
 import { ensureAuthMiddleware } from './common/middlewares/ensureAuth.middleware';
 import { PrismaModule } from './prisma/prisma.module';
-import { UsersController } from './routes/users/users.controller';
-import { UsersModule } from './routes/users/users.module';
-import { AuthModule } from './routes/auth/auth.module';
-import { CustomGamesModule } from './routes/custom_games/custom_games.module';
-import { CustomGamesController } from './routes/custom_games/custom_games.controller';
+import { CustomGamesController } from './custom_games/custom_games.controller';
+import { CustomGamesModule } from './custom_games/custom_games.module';
+import { UsersController } from './users/users.controller';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [PrismaModule, UsersModule, AuthModule, CustomGamesModule],
@@ -22,7 +22,6 @@ export class AppModule {
         { path: 'users/:id', method: RequestMethod.GET },
       )
       .forRoutes(UsersController, CustomGamesController);
-      
 
     /*  consumer
       .apply(ensureAuthMiddleware,ensureOwnerMiddleware)

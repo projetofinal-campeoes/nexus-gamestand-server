@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { hashSync } from 'bcryptjs';
-import { PrismaService } from '../../prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -29,13 +29,15 @@ export class UsersService {
     if (uniqueUserName || uniqueUserEmail) {
       throw new BadRequestException('Username or Email is already being used');
     }
-     
-    const newUser = await this.prisma.user.create({ data:{
-      ...createUserDto,
-      password:hashSync(createUserDto.password, 10)
-    }});
 
-    return newUser
+    const newUser = await this.prisma.user.create({
+      data: {
+        ...createUserDto,
+        password: hashSync(createUserDto.password, 10),
+      },
+    });
+
+    return newUser;
   }
 
   async findAll() {
@@ -64,6 +66,6 @@ export class UsersService {
       throw new NotFoundException('User not found, invalid ID');
     }
 
-    return !!await this.prisma.user.delete({ where: { id } });
+    return !!(await this.prisma.user.delete({ where: { id } }));
   }
 }

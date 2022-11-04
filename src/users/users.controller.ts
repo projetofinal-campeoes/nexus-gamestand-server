@@ -3,15 +3,15 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   NotFoundException,
   Param,
   Patch,
   Post,
   UseFilters,
-  HttpCode
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { PrismaClientExceptionFilter } from '../../prisma-client-exception/prisma-client-exception.filter';
+import { PrismaClientExceptionFilter } from '../prisma-client-exception/prisma-client-exception.filter';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
