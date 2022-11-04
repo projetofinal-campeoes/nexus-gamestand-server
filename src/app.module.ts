@@ -22,13 +22,5 @@ export class AppModule {
         { path: 'users', method: RequestMethod.GET },
       )
       .forRoutes(UsersController, CustomGamesController);
-
-    /*  consumer
-      .apply(ensureAuthMiddleware,ensureOwnerMiddleware)
-      .exclude(
-        { path: 'users', method: RequestMethod.POST},
-        { path: 'users', method: RequestMethod.POST}
-      )
-      .forRoutes(UsersController) */
   }
 }

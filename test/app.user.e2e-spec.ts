@@ -43,10 +43,7 @@ describe('AppController (e2e)', () => {
     it('Should be able to returns a list of users', async () => {
       const { status, body } = await request(app.getHttpServer()).get('/users');
       expect(status).toBe(200);
-      expect(body).toStrictEqual(expect.arrayContaining([userShape]));
-      expect(body).toHaveLength(2);
-      expect(body[0].id).toEqual(fakeUsers[0].id);
-      expect(body[1].id).toEqual(fakeUsers[1].id);
+      expect(body).toStrictEqual(expect.arrayContaining([userShape]));      
     });
   });
 
