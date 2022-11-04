@@ -61,7 +61,7 @@ describe('AppController (e2e)', () => {
 
     it('Failed to return a user with id different from the logged in user', async () => {
       const userLoginResponse = await request(app.getHttpServer())
-        .post('/auth')
+        .post('/login')
         .send(mockedUserLogin0);
 
       const { status, body } = await request(app.getHttpServer())
@@ -73,7 +73,7 @@ describe('AppController (e2e)', () => {
 
     it('Return a user by their id', async () => {
       const userLoginResponse = await request(app.getHttpServer())
-        .post('/auth')
+        .post('/login')
         .send(mockedUserLogin0);
 
       const { status, body } = await request(app.getHttpServer())
@@ -128,7 +128,7 @@ describe('AppController (e2e)', () => {
 
     it('Failed to update a user with id different from the logged in user', async () => {
       const userLoginResponse = await request(app.getHttpServer())
-        .post('/auth')
+        .post('/login')
         .send(mockedUserLogin1);
 
       const { status, body } = await request(app.getHttpServer())
@@ -146,7 +146,7 @@ describe('AppController (e2e)', () => {
       };
 
       const userLoginResponse = await request(app.getHttpServer())
-        .post('/auth')
+        .post('/login')
         .send(mockedUserLogin0);
 
       const { status, body } = await request(app.getHttpServer())
@@ -173,7 +173,7 @@ describe('AppController (e2e)', () => {
       const newStatus = { status: false };
 
       const userLoginResponse = await request(app.getHttpServer())
-        .post('/auth')
+        .post('/login')
         .send(mockedUserLogin1);
 
       const { status, body } = await request(app.getHttpServer())
@@ -188,7 +188,7 @@ describe('AppController (e2e)', () => {
       const newStatus = { status: false };
 
       const userLoginResponse = await request(app.getHttpServer())
-        .post('/auth')
+        .post('/login')
         .send(mockedUserLogin1);
 
       const { status, body } = await request(app.getHttpServer())
@@ -215,7 +215,7 @@ describe('AppController (e2e)', () => {
       const newSteamUser = { steam_user: 'luwny new steam' };
 
       const userLoginResponse = await request(app.getHttpServer())
-        .post('/auth')
+        .post('/login')
         .send(mockedUserLogin1);
 
       const { status, body } = await request(app.getHttpServer())
@@ -230,7 +230,7 @@ describe('AppController (e2e)', () => {
       const newSteamUser = { steam_user: 'luwny new steam' };
 
       const userLoginResponse = await request(app.getHttpServer())
-        .post('/auth')
+        .post('/login')
         .send(mockedUserLogin1);
 
       const { status, body } = await request(app.getHttpServer())
@@ -257,7 +257,7 @@ describe('AppController (e2e)', () => {
       const newGamepass = { gamepass: false };
 
       const userLoginResponse = await request(app.getHttpServer())
-        .post('/auth')
+        .post('/login')
         .send(mockedUserLogin1);
 
       const { status, body } = await request(app.getHttpServer())
@@ -272,7 +272,7 @@ describe('AppController (e2e)', () => {
       const newGamepass = { gamepass: false };
 
       const userLoginResponse = await request(app.getHttpServer())
-        .post('/auth')
+        .post('/login')
         .send(mockedUserLogin1);
 
       const { status, body } = await request(app.getHttpServer())
@@ -297,7 +297,7 @@ describe('AppController (e2e)', () => {
 
     it('Failed to delete a user with id different from the logged in user', async () => {
       const userLoginResponse = await request(app.getHttpServer())
-        .post('/auth')
+        .post('/login')
         .send(mockedUserLogin1);
 
       const { status, body } = await request(app.getHttpServer())
@@ -309,7 +309,7 @@ describe('AppController (e2e)', () => {
 
     it('Should be able to delete a user', async () => {
       const userLoginResponse = await request(app.getHttpServer())
-        .post('/auth')
+        .post('/login')
         .send(mockedUserLogin1);
 
       const { status, body } = await request(app.getHttpServer())
