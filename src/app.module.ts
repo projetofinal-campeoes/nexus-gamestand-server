@@ -3,9 +3,10 @@ import { ensureAuthMiddleware } from './common/middlewares/ensureAuth.middleware
 import { PrismaModule } from './prisma/prisma.module';
 import { UsersController } from './users/users.controller';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [PrismaModule, UsersModule],
+  imports: [PrismaModule, UsersModule, AuthModule],
   controllers: [],
   providers: [],
 })
