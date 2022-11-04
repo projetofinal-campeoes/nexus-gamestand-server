@@ -1,3 +1,4 @@
+import { ensureOwnerMiddleware } from './common/middlewares/ensureOwner.middleware';
 import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { ensureAuthMiddleware } from './common/middlewares/ensureAuth.middleware';
@@ -15,11 +16,10 @@ import { UsersModule } from './users/users.module';
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(ensureAuthMiddleware)
+      .apply(ensureAuthMiddleware,ensureOwnerMiddleware)
       .exclude(
         { path: 'users', method: RequestMethod.POST },
-        { path: 'users', method: RequestMethod.GET },
-        { path: 'users/:id', method: RequestMethod.GET },
+        { path: 'users', method: RequestMethod.GET },        
       )
       .forRoutes(UsersController, CustomGamesController);
 
