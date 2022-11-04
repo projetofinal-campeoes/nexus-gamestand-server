@@ -10,7 +10,7 @@ import {
   UseFilters,
   HttpCode
 } from '@nestjs/common';
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { PrismaClientExceptionFilter } from './../prisma-client-exception/prisma-client-exception.filter';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -36,6 +36,7 @@ export class UsersController {
   }
 
   @Get(':id')
+  @ApiBearerAuth('defaultBearerAuth')
   @ApiCreatedResponse({ type: UserEntity })
   async findOne(@Param('id') id: string) {
     const findOneUser = await this.usersService.findOne(id);
@@ -48,30 +49,35 @@ export class UsersController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth('defaultBearerAuth')
   @ApiCreatedResponse({ type: UserEntity })
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return await this.usersService.update(id, updateUserDto);
   }
 
   @Patch('status/:id')
+  @ApiBearerAuth('defaultBearerAuth')
   @ApiCreatedResponse({ type: UserEntity })  
   async updateUserStatus(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return await this.usersService.updateStatus(id, updateUserDto);
   }
 
   @Patch('steam/:id')
+  @ApiBearerAuth('defaultBearerAuth')
   @ApiCreatedResponse({ type: UserEntity })  
   async updateUserSteamName(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return await this.usersService.updateSteamUser(id, updateUserDto);
   }
 
   @Patch('gamepass/:id')
+  @ApiBearerAuth('defaultBearerAuth')
   @ApiCreatedResponse({ type: UserEntity })  
   async updateUserGamepass(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return await this.usersService.updateGamePass(id, updateUserDto);
   }
 
   @Delete(':id')
+  @ApiBearerAuth('defaultBearerAuth')
   @HttpCode(204)
   async remove(@Param('id') id: string) {
     return await this.usersService.remove(id);
