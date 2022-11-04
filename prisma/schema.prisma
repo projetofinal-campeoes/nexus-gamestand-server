@@ -48,9 +48,25 @@ model Custom_games {
 }
 
 model Promotions {
-  id     String  @id @default(uuid())
-  User   User?   @relation(fields: [userId], references: [id])
-  userId String?
+  id          String  @id @default(uuid())
+  name        String  @db.VarChar(64)
+  price       Decimal @db.Decimal(5, 2)
+  promo_url   String
+  description String? @db.VarChar(256)
+  shiny_meter Int     @default(0)
+  User        User?   @relation(fields: [userId], references: [id])
+  userId      String
+  rate_log    Rate_log[]
 
   @@map("promotions")
+}
+
+model Rate_log {
+    id          String @id
+    user_id     String
+    like        Boolean
+    Promotion   Promotions @relation(fields: [promotionId], references: [id])
+    promotionId String
+
+    @@map("rate_log")
 }

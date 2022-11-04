@@ -7,9 +7,11 @@ import { CustomGamesModule } from './routes/custom_games/custom_games.module';
 import { LoginModule } from './routes/login/login.module';
 import { UsersController } from './routes/users/users.controller';
 import { UsersModule } from './routes/users/users.module';
+import { PromotionsModule } from './routes/promotions/promotions.module';
+import { PromotionsController } from './routes/promotions/promotions.controller';
 
 @Module({
-  imports: [PrismaModule, UsersModule, LoginModule, CustomGamesModule],
+  imports: [PrismaModule, UsersModule, LoginModule, CustomGamesModule, PromotionsModule],
   controllers: [],
   providers: [],
 })
@@ -21,7 +23,7 @@ export class AppModule {
         { path: 'users', method: RequestMethod.POST },
         { path: 'users', method: RequestMethod.GET },
       )
-      .forRoutes(UsersController, CustomGamesController);
+      .forRoutes(UsersController, CustomGamesController, PromotionsController);
 
     /*  consumer
       .apply(ensureAuthMiddleware,ensureOwnerMiddleware)
