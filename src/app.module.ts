@@ -7,9 +7,17 @@ import { CustomGamesModule } from './routes/custom_games/custom_games.module';
 import { LoginModule } from './routes/login/login.module';
 import { UsersController } from './routes/users/users.controller';
 import { UsersModule } from './routes/users/users.module';
+import { FriendsModule } from './routes/friends/friends.module';
+import { FriendsController } from './routes/friends/friends.controller';
 
 @Module({
-  imports: [PrismaModule, UsersModule, LoginModule, CustomGamesModule],
+  imports: [
+    PrismaModule,
+    UsersModule,
+    LoginModule,
+    CustomGamesModule,
+    FriendsModule,
+  ],
   controllers: [],
   providers: [],
 })
@@ -23,6 +31,7 @@ export class AppModule {
       )
       .forRoutes(UsersController, CustomGamesController);
 
+    consumer.apply(ensureAuthMiddleware).forRoutes(FriendsController);
     /*  consumer
       .apply(ensureAuthMiddleware,ensureOwnerMiddleware)
       .exclude(
