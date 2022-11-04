@@ -53,6 +53,24 @@ export class UsersController {
     return await this.usersService.update(id, updateUserDto);
   }
 
+  @Patch('status/:id')
+  @ApiCreatedResponse({ type: UserEntity })  
+  async updateUserStatus(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return await this.usersService.updateStatus(id, updateUserDto);
+  }
+
+  @Patch('steam/:id')
+  @ApiCreatedResponse({ type: UserEntity })  
+  async updateUserSteamName(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return await this.usersService.updateSteamUser(id, updateUserDto);
+  }
+
+  @Patch('gamepass/:id')
+  @ApiCreatedResponse({ type: UserEntity })  
+  async updateUserGamepass(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return await this.usersService.updateGamePass(id, updateUserDto);
+  }
+
   @Delete(':id')
   @HttpCode(204)
   async remove(@Param('id') id: string) {
