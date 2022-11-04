@@ -1,6 +1,6 @@
 import { Body, Controller, Post, UseFilters } from '@nestjs/common';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { PrismaClientExceptionFilter } from 'src/prisma-client-exception/prisma-client-exception.filter';
+import { PrismaClientExceptionFilter } from '../../prisma-client-exception/prisma-client-exception.filter';
 import { CreateLoginDto } from './dto/create-login.dto';
 import { AuthEntity } from './entities/auth.entity';
 import { LoginService } from './login.service';

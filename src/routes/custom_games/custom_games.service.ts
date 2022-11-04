@@ -1,5 +1,5 @@
 import { BadRequestException, NotFoundException, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { CreateCustomGameDto } from './dto/create-custom_game.dto';
 import { UpdateCustomGameDto } from './dto/update-custom_game.dto';
 

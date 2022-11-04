@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, UseFilters } from '@nestjs/common';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { PrismaClientExceptionFilter } from 'src/prisma-client-exception/prisma-client-exception.filter';
+import { PrismaClientExceptionFilter } from '../../prisma-client-exception/prisma-client-exception.filter';
 import { CustomGamesService } from './custom_games.service';
 import { CreateCustomGameDto } from './dto/create-custom_game.dto';
 import { UpdateCustomGameDto } from './dto/update-custom_game.dto';
