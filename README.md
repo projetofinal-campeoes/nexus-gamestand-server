@@ -12,7 +12,7 @@
 
 A API tem um total de 4 endpoints, sendo em volta principalmente do usuário - podendo cadastrar seu perfil, e jogos custom de fora das plataformas que o site oferece suporte.
 
-O url base da API é https://nexus-gamestand-api.herokuapp.com/
+O url base da API é https://nexus-gamestand-server.herokuapp.com
 
 ## Rotas que precisam de autenticação
 
