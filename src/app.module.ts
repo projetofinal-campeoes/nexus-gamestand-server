@@ -4,14 +4,22 @@ import { ensureOwnerMiddleware } from './common/middlewares/ensureOwner.middlewa
 import { PrismaModule } from './prisma/prisma.module';
 import { CustomGamesController } from './routes/custom_games/custom_games.controller';
 import { CustomGamesModule } from './routes/custom_games/custom_games.module';
+import { FriendsController } from './routes/friends/friends.controller';
+import { FriendsModule } from './routes/friends/friends.module';
 import { LoginModule } from './routes/login/login.module';
 import { UsersController } from './routes/users/users.controller';
 import { UsersModule } from './routes/users/users.module';
 import { PromotionsModule } from './routes/promotions/promotions.module';
-import { PromotionsController } from './routes/promotions/promotions.controller';
 
 @Module({
-  imports: [PrismaModule, UsersModule, LoginModule, CustomGamesModule, PromotionsModule],
+  imports: [
+    PrismaModule,
+    UsersModule,
+    LoginModule,
+    CustomGamesModule,
+    FriendsModule,
+    PromotionsModule
+  ],
   controllers: [],
   providers: [],
 })
@@ -25,12 +33,6 @@ export class AppModule {
       )
       .forRoutes(UsersController, CustomGamesController);
 
-    /*  consumer
-      .apply(ensureAuthMiddleware,ensureOwnerMiddleware)
-      .exclude(
-        { path: 'users', method: RequestMethod.POST},
-        { path: 'users', method: RequestMethod.POST}
-      )
-      .forRoutes(UsersController) */
+    consumer.apply(ensureAuthMiddleware).forRoutes(FriendsController);
   }
 }

@@ -10,7 +10,7 @@ datasource db {
 model User {
   id         String  @id @default(uuid())
   username   String  @unique @db.VarChar(32)
-  avatar_url String? 
+  avatar_url String?
   email      String  @unique @db.VarChar(128)
   password   String  @db.VarChar(128)
   status     Boolean @default(true)
@@ -28,10 +28,11 @@ model User {
 }
 
 model Friends {
-  id      String  @id @default(uuid())
-  User    User?   @relation(fields: [userId], references: [id])
-  userId  String?
-  newFKey String //new foreign key
+  id         String  @id @default(uuid())
+  userId     String
+  User       User?   @relation(fields: [userId], references: [id])
+  friendId   String
+  friendName String?
 
   @@map("friends")
 }
