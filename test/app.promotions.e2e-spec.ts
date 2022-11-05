@@ -12,7 +12,7 @@ describe('PromotionsController (e2e)', () => {
   let prisma: PrismaService;
   let token: string
   let promotion
-  let alternativeToken
+  let alternativeToken: string
   let alternativePromotion
 
   beforeAll(async () => {
@@ -38,14 +38,16 @@ describe('PromotionsController (e2e)', () => {
 
   describe('POST ---> /promotions', () => {
     it('Should be able to create a promotion', async () => {
-        const loginResponse = await request(app.getHttpServer()).post('/auth').send(mockedUserLogin1)
+        const loginResponse = await request(app.getHttpServer()).post('/login').send(mockedUserLogin1)
         token = loginResponse.body.token
 
         const { status, body } = await request(app.getHttpServer()).post('/promotions').send(promotionCreateData).set('Authorization', `Bearer ${token}`)
         promotion = body
 
         expect(status).toBe(201)
-        expect(body).toHaveProperty(['id', 'shine_meter', 'userId'])
+        expect(body).toHaveProperty('id')
+        expect(body).toHaveProperty('shiny_meter')
+        expect(body).toHaveProperty('userId')
     })
 
     it('Should not be able to create a promotion without token', async () => {
@@ -79,13 +81,13 @@ describe('PromotionsController (e2e)', () => {
         expect(status).toBe(200)
         expect(body).toMatchObject({
             name: 'Left 4 Dead - Xbox',
-            promo_url: 'www.google.com',
-            price: 14.90,
+            promo_url: 'www.steam.com',
+            price: '14.9',
             description: 'Esta rolando promoção do Left 4 Dead na Steam, corre lá pegar!'
         })
     })
 
-    it('Should not be able o update a promotion without token', async () => {
+    it('Should not be able to update a promotion without token', async () => {
         const { status, body } = await request(app.getHttpServer()).patch(`/promotions/${promotion.id}`).send(promotionUpdatedData)
 
         expect(status).toBe(401)
@@ -93,7 +95,7 @@ describe('PromotionsController (e2e)', () => {
     })
 
     it('Should not be able to update not owned promotion', async () => {
-        const loginResponse = await request(app.getHttpServer()).post('/auth').send(mockedUserLogin0)
+        const loginResponse = await request(app.getHttpServer()).post('/login').send(mockedUserLogin0)
         alternativeToken = loginResponse.body.token
         
         const newPromotion = await request(app.getHttpServer()).post('/promotions').send(promotionCreateData).set('Authorization', `Bearer ${alternativeToken}`)
@@ -118,21 +120,21 @@ describe('PromotionsController (e2e)', () => {
     })
 
     it('Should be able to dislike a promotion', async () => {
-        const { status } = await request(app.getHttpServer()).post(`/promotions/${promotion.id}/dislike`).set('Authorization', `Bearer ${token}`)
+        const { status } = await request(app.getHttpServer()).post(`/promotions/${promotion.id}/dislike`).set('Authorization', `Bearer ${alternativeToken}`)
 
         expect(status).toBe(200)
         
         const { body } = await request(app.getHttpServer()).get('/promotions').set('Authorization', `Bearer ${token}`)
         expect(body[0].shiny_meter).toBe(0)
+        expect(body[0].rate_log).toHaveLength(2)
     })
 
     it('Should not be able to rate twice a promotion', async () => {
-        const { status } = await request(app.getHttpServer()).post(`/promotions/${promotion.id}/like`).set('Authorization', `Bearer ${token}`)
+        const { status, body } = await request(app.getHttpServer()).post(`/promotions/${promotion.id}/like`).set('Authorization', `Bearer ${token}`)
 
-        expect(status).toBe(200)
+        expect(status).toBe(409)
         
-        const { body } = await request(app.getHttpServer()).get('/promotions').set('Authorization', `Bearer ${token}`)
-        expect(body[0].shiny_meter).toBe(0)
+        expect(body).toHaveProperty('message')
     })
 
     it('Should not be able to rate a promotion without token', async () => {
@@ -157,7 +159,7 @@ describe('PromotionsController (e2e)', () => {
         expect(body).toHaveProperty('message')
     })
 
-    it('Should not be able to update not owned promotion', async () => {    
+    it('Should not be able to delete not owned promotion', async () => {    
         const { status, body } = await request(app.getHttpServer()).delete(`/promotions/${alternativePromotion.id}`).set('Authorization', `Bearer ${token}`)
 
         expect(status).toBe(401)

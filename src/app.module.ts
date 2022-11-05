@@ -23,7 +23,7 @@ export class AppModule {
         { path: 'users', method: RequestMethod.POST },
         { path: 'users', method: RequestMethod.GET },
       )
-      .forRoutes(UsersController, CustomGamesController, PromotionsController);
+      .forRoutes(UsersController, CustomGamesController);
 
     /*  consumer
       .apply(ensureAuthMiddleware,ensureOwnerMiddleware)

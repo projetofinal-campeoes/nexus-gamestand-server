@@ -3,20 +3,20 @@ import { hashSync } from "bcryptjs";
 export const promotionCreateData = {
     name: 'Left 4 Dead - Steam',
     promo_url: 'www.steam.com',
-    price: 9.90,
+    price: '9.90',
     description: 'Esta rolando promoção do Left 4 Dead na Steam, corre lá pegar!'
 }
 
 export const promotionCreateDataVariant = {
     name: 'Cyberpunk 2077 - GOG',
     promo_url: 'www.gog.com',
-    price: 100.00,
+    price: '100.00',
     description: 'Esta rolando promoção do Cyberpunk na GOG, só precisa se registrar e usar o cupom TOPZERA2077!'
 }
 
 export const promotionUpdatedData = {
     name: 'Left 4 Dead - Xbox',
-    price: 14.90
+    price: '14.90'
 }
 
 export const promotionFakeUsers = [

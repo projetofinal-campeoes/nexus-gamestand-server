@@ -54,7 +54,7 @@ model Promotions {
   promo_url   String
   description String? @db.VarChar(256)
   shiny_meter Int     @default(0)
-  User        User?   @relation(fields: [userId], references: [id])
+  User        User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
   rate_log    Rate_log[]
 
@@ -62,10 +62,10 @@ model Promotions {
 }
 
 model Rate_log {
-    id          String @id
+    id          String @id @default(uuid())
     user_id     String
     like        Boolean
-    Promotion   Promotions @relation(fields: [promotionId], references: [id])
+    Promotion   Promotions @relation(fields: [promotionId], references: [id], onDelete: Cascade)
     promotionId String
 
     @@map("rate_log")

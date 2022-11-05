@@ -1,6 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Promotions } from "@prisma/client";
+import { Decimal } from "@prisma/client/runtime";
 
-export class Promotion {
+export class Promotion implements Promotions {
     @ApiProperty()
     id: string;
 
@@ -8,7 +10,7 @@ export class Promotion {
     name: string;
 
     @ApiProperty()
-    price: number;
+    price: Decimal;
 
     @ApiProperty()
     promo_url: string;

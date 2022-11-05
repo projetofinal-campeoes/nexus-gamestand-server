@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNumber, IsOptional, IsString, Length } from "class-validator";
+import { Decimal } from "@prisma/client/runtime";
+import { IsDecimal, IsOptional, IsString, Length } from "class-validator";
 
 export class CreatePromotionDto {
     @IsString()
@@ -7,9 +8,9 @@ export class CreatePromotionDto {
     @ApiProperty()
     name: string;
 
-    @IsNumber()
+    @IsDecimal()
     @ApiProperty()
-    price: number;
+    price: Decimal;
 
     @IsString()
     @ApiProperty()
