@@ -2,8 +2,8 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { useContainer } from 'class-validator';
 import * as request from 'supertest';
-import { PrismaService } from '../src/prisma/prisma.service';
 import { AppModule } from '../src/app.module';
+import { PrismaService } from '../src/prisma/prisma.service';
 import {
   emailAlreadyUsed,
   fakeUsers,
@@ -44,8 +44,6 @@ describe('AppController (e2e)', () => {
       const { status, body } = await request(app.getHttpServer()).get('/users');
       expect(status).toBe(200);
       expect(body).toStrictEqual(expect.arrayContaining([userShape]));
-      // expect(body[0].id).toEqual(fakeUsers[0].id);
-      // expect(body[1].id).toEqual(fakeUsers[1].id);
     });
   });
 
