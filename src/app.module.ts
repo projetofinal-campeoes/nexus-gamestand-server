@@ -9,6 +9,7 @@ import { FriendsModule } from './routes/friends/friends.module';
 import { LoginModule } from './routes/login/login.module';
 import { UsersController } from './routes/users/users.controller';
 import { UsersModule } from './routes/users/users.module';
+import { PromotionsModule } from './routes/promotions/promotions.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { UsersModule } from './routes/users/users.module';
     LoginModule,
     CustomGamesModule,
     FriendsModule,
+    PromotionsModule
   ],
   controllers: [],
   providers: [],
