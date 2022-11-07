@@ -11,7 +11,7 @@ export class FriendsService {
   constructor(private prisma: PrismaService) {}
 
   async create({ username }: CreateFriendDto, id: string) {
-    const user = await this.prisma.user.findFirst({
+    const user = await this.prisma.user.findUnique({
       where: {
         username,
       },
@@ -60,7 +60,7 @@ export class FriendsService {
   }
 
   async findOne(id: string) {
-    const friend = this.prisma.user.findFirst({
+    const friend = this.prisma.user.findUnique({
       where: {
         id: id,
       },
