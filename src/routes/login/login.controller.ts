@@ -4,6 +4,7 @@ import { PrismaClientExceptionFilter } from '../../prisma-client-exception/prism
 import { CreateLoginDto } from './dto/create-login.dto';
 import { AuthEntity } from './entities/auth.entity';
 import { LoginService } from './login.service';
+import { SkipThrottle } from '@nestjs/throttler';
 
 @Controller('login')
 @ApiTags('sessions')
@@ -11,6 +12,7 @@ import { LoginService } from './login.service';
 export class LoginController {
   constructor(private readonly loginService: LoginService) {}
 
+  @SkipThrottle()
   @Post()
   @ApiCreatedResponse({ type: AuthEntity })
   async create(@Body() createLoginDto: CreateLoginDto) {
