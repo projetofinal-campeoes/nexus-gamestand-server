@@ -43,7 +43,10 @@ describe('Integration Tests: Users Routes', () => {
     it('Should be able to returns a list of users', async () => {
       const { status, body } = await request(app.getHttpServer()).get('/users');
       expect(status).toBe(200);
-      expect(body).toStrictEqual(expect.arrayContaining([userShape]));
+
+      expect(body).toStrictEqual(expect.arrayContaining([userShape]));     
+
+     
     });
   });
 

@@ -53,4 +53,5 @@ export class FriendsController {
   async remove(@Param('id') id: string) {
     await this.friendsService.remove(id);
   }
+
 }
