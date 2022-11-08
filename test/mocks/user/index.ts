@@ -4,7 +4,7 @@ export const fakeUsers = [
     id: '7f82fe18-737e-44bb-9bba-067e3583337b',
     username: 'mathsudre',
     avatar_url: 'https://avatars.githubusercontent.com/u/100591242?v=4',
-    email: 'math@email.com',    
+    email: 'math@email.com',
     password: hashSync('Teste@123', 10),
     steam_user: 'mathsudre',
     gamepass: true,
@@ -51,7 +51,7 @@ export const emailAlreadyUsed = {
 //login mocks
 
 export const mockedUserLogin0 = {
-  email: 'math@email.com',    
+  email: 'math@email.com',
   password: 'Teste@123'
 }
 
@@ -60,14 +60,16 @@ export const mockedUserLogin1 = {
   password: 'Teste@123'
 }
 
-
+export const invalidCredentials = {
+  email: "juca@mail.com",
+  password: "123456"
+}
 
 export const userShape = expect.objectContaining({
   id: expect.any(String),
   username: expect.any(String),
   avatar_url: expect.any(String),
-  email: expect.any(String),
-  password: expect.any(String),
+  email: expect.any(String), 
   status: expect.any(Boolean),
   steam_user: expect.any(String),
   gamepass: expect.any(Boolean),

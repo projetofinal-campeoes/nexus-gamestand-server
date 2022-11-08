@@ -10,7 +10,7 @@ datasource db {
 model User {
   id         String  @id @default(uuid())
   username   String  @unique @db.VarChar(32)
-  avatar_url String? 
+  avatar_url String?
   email      String  @unique @db.VarChar(128)
   password   String  @db.VarChar(128)
   status     Boolean @default(true)
@@ -28,10 +28,11 @@ model User {
 }
 
 model Friends {
-  id      String  @id @default(uuid())
-  User    User?   @relation(fields: [userId], references: [id])
-  userId  String?
-  newFKey String //new foreign key
+  id         String  @id @default(uuid())
+  userId     String
+  User       User?   @relation(fields: [userId], references: [id])
+  friendId   String
+  friendName String?
 
   @@map("friends")
 }
@@ -48,9 +49,25 @@ model Custom_games {
 }
 
 model Promotions {
-  id     String  @id @default(uuid())
-  User   User?   @relation(fields: [userId], references: [id])
-  userId String?
+  id          String  @id @default(uuid())
+  name        String  @db.VarChar(64)
+  price       Decimal @db.Decimal(5, 2)
+  promo_url   String
+  description String? @db.VarChar(256)
+  shiny_meter Int     @default(0)
+  User        User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  rate_log    Rate_log[]
 
   @@map("promotions")
+}
+
+model Rate_log {
+    id          String @id @default(uuid())
+    user_id     String
+    like        Boolean
+    Promotion   Promotions @relation(fields: [promotionId], references: [id], onDelete: Cascade)
+    promotionId String
+
+    @@map("rate_log")
 }
