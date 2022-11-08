@@ -25,23 +25,23 @@ export class FriendsService {
       throw new BadRequestException('Cannot add own user');
     }
 
-    // const friendExists = await this.prisma.friends.findFirst({
-    //   where: {
-    //     friendId: user.id,
-    //   },
-    // });
+    const friendExists = await this.prisma.friends.findFirst({
+      where: {
+        friendId: user.id,
+      },
+    });
 
-    // if (friendExists) {
-    //   throw new BadRequestException('Friend already exists');
-    // }
+    if (friendExists) {
+      throw new BadRequestException('Friend already exists');
+    }
 
-    // await this.prisma.friends.create({
-    //   data: {
-    //     userId: id,
-    //     friendId: user.id,
-    //     friendName: user.username,
-    //   },
-    // });
+    await this.prisma.friends.create({
+      data: {
+        userId: id,
+        friendId: user.id,
+        friendName: user.username,
+      },
+    });
 
     return {
       message: `${user.username} has been added to friend list`,
@@ -74,21 +74,21 @@ export class FriendsService {
   }
 
   async remove(id: string) {
-    // const friend = await this.prisma.friends.findFirst({
-    //   where: {
-    //     friendId: id,
-    //   },
-    // });
+    const friend = await this.prisma.friends.findFirst({
+      where: {
+        friendId: id,
+      },
+    });
 
-    // if (!friend) {
-    //   throw new NotFoundException('Friend not found');
-    // }
+    if (!friend) {
+      throw new NotFoundException('Friend not found');
+    }
 
-    // await this.prisma.friends.delete({
-    //   where: {
-    //     id: friend.id,
-    //   },
-    // });
+    await this.prisma.friends.delete({
+      where: {
+        id: friend.id,
+      },
+    });
 
     return true;
   }
