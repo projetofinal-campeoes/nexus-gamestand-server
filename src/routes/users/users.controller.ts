@@ -12,6 +12,7 @@ import {
 } from '@nestjs/common';
 
 import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { SkipThrottle } from '@nestjs/throttler';
 import { PrismaClientExceptionFilter } from '../../prisma-client-exception/prisma-client-exception.filter';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -22,20 +23,23 @@ import { UsersService } from './users.service';
 @ApiTags('users')
 @UseFilters(PrismaClientExceptionFilter)
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
+  @SkipThrottle()
   @Post()
   @ApiCreatedResponse({ type: UserEntity })
   async create(@Body() createUserDto: CreateUserDto) {
     return await this.usersService.create(createUserDto);
   }
 
+  @SkipThrottle()
   @Get()
   @ApiCreatedResponse({ type: UserEntity, isArray: true })
   async findAll() {
     return await this.usersService.findAll();
   }
 
+  @SkipThrottle()
   @Get(':id')
   @ApiBearerAuth('defaultBearerAuth')
   @ApiCreatedResponse({ type: UserEntity })
@@ -49,6 +53,7 @@ export class UsersController {
     return findOneUser;
   }
 
+  @SkipThrottle()
   @Patch(':id')
   @ApiBearerAuth('defaultBearerAuth')
   @ApiCreatedResponse({ type: UserEntity })
@@ -56,6 +61,7 @@ export class UsersController {
     return await this.usersService.update(id, updateUserDto);
   }
 
+  @SkipThrottle()
   @Patch('status/:id')
   @ApiBearerAuth('defaultBearerAuth')
   @ApiCreatedResponse({ type: UserEntity })
@@ -66,6 +72,7 @@ export class UsersController {
     return await this.usersService.updateStatus(id, updateUserDto);
   }
 
+  @SkipThrottle()
   @Patch('steam/:id')
   @ApiBearerAuth('defaultBearerAuth')
   @ApiCreatedResponse({ type: UserEntity })
@@ -76,6 +83,7 @@ export class UsersController {
     return await this.usersService.updateSteamUser(id, updateUserDto);
   }
 
+  @SkipThrottle()
   @Patch('gamepass/:id')
   @ApiBearerAuth('defaultBearerAuth')
   @ApiCreatedResponse({ type: UserEntity })
@@ -86,6 +94,7 @@ export class UsersController {
     return await this.usersService.updateGamePass(id, updateUserDto);
   }
 
+  @SkipThrottle()
   @Delete(':id')
   @ApiBearerAuth('defaultBearerAuth')
   @HttpCode(204)
