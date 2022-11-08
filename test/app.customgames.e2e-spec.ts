@@ -126,7 +126,7 @@ describe('Integration Tests: Login Routes', () => {
         });
     })
 
-    describe('GET ---> /custom_games', () => {
+    describe('PATCH ---> /custom_games', () => {
         it('Should not be able to update games with invalid token', async () => {
             const { status, body } = await request(app.getHttpServer())
             .get('/custom_games/users')
