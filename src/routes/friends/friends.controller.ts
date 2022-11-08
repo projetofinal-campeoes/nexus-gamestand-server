@@ -12,7 +12,7 @@ import {
 import { FriendsService } from './friends.service';
 import { CreateFriendDto } from './dto/create-friend.dto';
 import { Request } from 'express';
-import { PrismaClientExceptionFilter } from 'src/prisma-client-exception/prisma-client-exception.filter';
+import { PrismaClientExceptionFilter } from '../../prisma-client-exception/prisma-client-exception.filter';
 import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { FriendEntity } from './entities/friend.entity';
 
