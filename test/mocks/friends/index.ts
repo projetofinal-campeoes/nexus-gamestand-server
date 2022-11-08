@@ -35,6 +35,36 @@ export const addFriend = {
   username: 'luw',
 };
 
+export const userShape = expect.objectContaining({
+  id: expect.any(String),
+  username: expect.any(String),
+  avatar_url: expect.any(String),
+  email: expect.any(String),
+  password: expect.any(String),
+  status: expect.any(Boolean),
+  steam_user: expect.any(String),
+  gamepass: expect.any(Boolean),
+  created_at: expect.any(String),
+  updated_at: expect.any(String),
+});
+
+export const userWithFriendsShape = expect.objectContaining({
+  id: expect.any(String),
+  username: expect.any(String),
+  avatar_url: expect.any(String),
+  email: expect.any(String),
+  password: expect.any(String),
+  status: expect.any(Boolean),
+  steam_user: expect.any(String),
+  gamepass: expect.any(Boolean),
+  created_at: expect.any(String),
+  updated_at: expect.any(String),
+  friends: expect.any(Object),
+});
+
 export const friendsShape = expect.objectContaining({
-  token: expect.any(String),
+  id: expect.any(String),
+  userId: expect.any(String),
+  friendId: expect.any(String),
+  friendName: expect.any(String),
 });
