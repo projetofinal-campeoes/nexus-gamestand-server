@@ -21,7 +21,7 @@ import { SkipThrottle } from '@nestjs/throttler';
 @ApiTags('friends')
 @UseFilters(PrismaClientExceptionFilter)
 export class FriendsController {
-  constructor(private readonly friendsService: FriendsService) { }
+  constructor(private readonly friendsService: FriendsService) {}
 
   @SkipThrottle()
   @Post()
@@ -47,16 +47,19 @@ export class FriendsController {
   @Get(':id')
   @ApiBearerAuth('defaultBearerAuth')
   @ApiCreatedResponse({ type: FriendEntity })
-  async findOne(@Param('id') id: string) {
-    return await this.friendsService.findOne(id);
+  async findOne(@Param('id') id: string, @Req() req: Request) {
+    const { id: userId } = req.user;
+
+    return await this.friendsService.findOne(id, userId);
   }
 
   @SkipThrottle()
   @Delete(':id')
   @ApiBearerAuth('defaultBearerAuth')
   @HttpCode(204)
-  async remove(@Param('id') id: string) {
-    await this.friendsService.remove(id);
-  }
+  async remove(@Param('id') id: string, @Req() req: Request) {
+    const { id: userId } = req.user;
 
+    await this.friendsService.remove(id, userId);
+  }
 }

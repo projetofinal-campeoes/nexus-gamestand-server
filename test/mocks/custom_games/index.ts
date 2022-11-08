@@ -38,9 +38,6 @@ export const loginTest2 = {
   password: 'Teste@1232'
 }
 
-
-export const invalidCustomGamesTest = [{}];
-
 export const customGamesShape = expect.objectContaining({
   id: expect.any(String),
   name: expect.any(String),
