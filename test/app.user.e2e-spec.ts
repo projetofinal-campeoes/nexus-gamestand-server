@@ -14,7 +14,7 @@ import {
   userShape,
 } from './mocks/user/index';
 
-describe('AppController (e2e)', () => {
+describe('Integration Tests: Users Routes', () => {
   let app: INestApplication;
   let prisma: PrismaService;
 
@@ -43,7 +43,10 @@ describe('AppController (e2e)', () => {
     it('Should be able to returns a list of users', async () => {
       const { status, body } = await request(app.getHttpServer()).get('/users');
       expect(status).toBe(200);
-      expect(body).toStrictEqual(expect.arrayContaining([userShape]));
+
+      expect(body).toStrictEqual(expect.arrayContaining([userShape]));     
+
+     
     });
   });
 

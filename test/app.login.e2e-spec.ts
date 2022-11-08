@@ -7,7 +7,7 @@ import * as request from 'supertest';
 import { fakeUsersLogin, loginUser, loginUser3 } from "./mocks/login";
 import { invalidCredentials } from "./mocks/user";
 
-describe('AppController (e2e)', () => {
+describe('Integration Tests: Login Routes', () => {
     let app: INestApplication;
     let prisma: PrismaService;
 
