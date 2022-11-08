@@ -15,13 +15,15 @@ import { Request } from 'express';
 import { PrismaClientExceptionFilter } from '../../prisma-client-exception/prisma-client-exception.filter';
 import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { FriendEntity } from './entities/friend.entity';
+import { SkipThrottle } from '@nestjs/throttler';
 
 @Controller('friends')
 @ApiTags('friends')
 @UseFilters(PrismaClientExceptionFilter)
 export class FriendsController {
-  constructor(private readonly friendsService: FriendsService) {}
+  constructor(private readonly friendsService: FriendsService) { }
 
+  @SkipThrottle()
   @Post()
   @ApiBearerAuth('defaultBearerAuth')
   @ApiCreatedResponse({ type: FriendEntity })
@@ -31,6 +33,7 @@ export class FriendsController {
     return await this.friendsService.create(createFriendDto, id);
   }
 
+  @SkipThrottle()
   @Get()
   @ApiBearerAuth('defaultBearerAuth')
   @ApiCreatedResponse({ type: FriendEntity, isArray: true })
@@ -40,6 +43,7 @@ export class FriendsController {
     return await this.friendsService.findAllFriendsByUser(id);
   }
 
+  @SkipThrottle()
   @Get(':id')
   @ApiBearerAuth('defaultBearerAuth')
   @ApiCreatedResponse({ type: FriendEntity })
@@ -47,6 +51,7 @@ export class FriendsController {
     return await this.friendsService.findOne(id);
   }
 
+  @SkipThrottle()
   @Delete(':id')
   @ApiBearerAuth('defaultBearerAuth')
   @HttpCode(204)

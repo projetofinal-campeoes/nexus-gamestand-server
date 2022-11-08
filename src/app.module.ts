@@ -10,6 +10,7 @@ import { LoginModule } from './routes/login/login.module';
 import { PromotionsModule } from './routes/promotions/promotions.module';
 import { UsersController } from './routes/users/users.controller';
 import { UsersModule } from './routes/users/users.module';
+import { BugReportModule } from './routes/bug-report/bug-report.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { UsersModule } from './routes/users/users.module';
     CustomGamesModule,
     FriendsModule,
     PromotionsModule,
+    BugReportModule,
   ],
   controllers: [],
   providers: [],

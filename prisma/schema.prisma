@@ -23,6 +23,7 @@ model User {
   friends      Friends[]
   promotions   Promotions[]
   custom_games Custom_games[]
+  bug_report   Bug_report[]
 
   @@map("user")
 }
@@ -70,4 +71,14 @@ model Rate_log {
     promotionId String
 
     @@map("rate_log")
+}
+
+model Bug_report {
+    id          String @id @default(uuid())
+    page        String @db.VarChar(24)
+    description String @db.VarChar(256)
+    User        User   @relation(fields: [userId], references: [id])
+    userId      String
+
+    @@map("bug_report")
 }

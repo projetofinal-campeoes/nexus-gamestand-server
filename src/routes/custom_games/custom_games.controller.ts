@@ -22,7 +22,7 @@ import { CustomGamesEntity } from './entities/custom_game.entity';
 @ApiTags('custom_games')
 @UseFilters(PrismaClientExceptionFilter)
 export class CustomGamesController {
-  constructor(private readonly customGamesService: CustomGamesService) {}
+  constructor(private readonly customGamesService: CustomGamesService) { }
 
   @Post()
   @ApiCreatedResponse({ type: CustomGamesEntity })
@@ -57,6 +57,7 @@ export class CustomGamesController {
     return await this.customGamesService.update(id, updateCustomGameDto);
   }
 
+  @SkipThrottle()
   @Delete(':id')
   @HttpCode(204)
   async delete(@Param('id') id: string) {

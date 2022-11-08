@@ -124,7 +124,17 @@ describe('Integration Tests: Login Routes', () => {
             expect(status).toBe(200)
             expect(body).toStrictEqual(customGamesShape)
         });
+    })
 
+    describe('GET ---> /custom_games', () => {
+        it('Should not be able to update games with invalid token', async () => {
+            const { status, body } = await request(app.getHttpServer())
+            .get('/custom_games/users')
+            .set('Authorization', `Bearer`);
+            
+            expect(status).toBe(401)
+            expect(body).toHaveProperty('message')
 
+        })
     })
 })
