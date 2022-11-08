@@ -3,8 +3,10 @@ import { PromotionsService } from './promotions.service';
 import { CreatePromotionDto } from './dto/create-promotion.dto';
 import { UpdatePromotionDto } from './dto/update-promotion.dto';
 import { Request } from 'express';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('promotions')
+@ApiTags('promotions')
 export class PromotionsController {
   constructor(private readonly promotionsService: PromotionsService) {}
 

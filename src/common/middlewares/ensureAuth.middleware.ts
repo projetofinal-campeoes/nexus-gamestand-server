@@ -24,7 +24,7 @@ export class ensureAuthMiddleware implements NestMiddleware {
           throw new UnauthorizedException('Invalid Token');
         }
 
-        req.user = { id: decoded.sub };
+        req.user = { id: decoded.sub, email: decoded.email };
 
         return next();
       },
