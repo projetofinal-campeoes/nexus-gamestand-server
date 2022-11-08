@@ -17,7 +17,7 @@ describe('Integration Tests: Custom Games Routes', () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let customGame
-  let token
+  let token: string
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -136,11 +136,11 @@ describe('Integration Tests: Custom Games Routes', () => {
     });
 
     it('Should be able to show game by game ID', async () => {
-      const response2 = await request(app.getHttpServer())
+      const response = await request(app.getHttpServer())
         .get('/custom_games/users')
         .set('Authorization', `Bearer ${token}`);
       const { status, body } = await request(app.getHttpServer())
-        .get(`/custom_games/games/${response2.body.custom_games[0].id}`)
+        .get(`/custom_games/games/${response.body.custom_games[0].id}`)
         .set('Authorization', `Bearer ${token}`);
       expect(status).toBe(200);
       expect(body).toStrictEqual(customGamesShape);
@@ -197,6 +197,13 @@ describe('Integration Tests: Custom Games Routes', () => {
       expect(body).toHaveProperty('message');
     });
 
-  })
+    it('Should be able to delete games with valid token', async () => {
+      const { status, body } = await request(app.getHttpServer())
+        .delete(`/custom_games/${customGame.id}`)
+        .set('Authorization', `Bearer ${token}`);
 
+      expect(status).toBe(204);
+      expect(body).toMatchObject({})
+    });
+  })
 });
