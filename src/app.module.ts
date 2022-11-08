@@ -7,8 +7,10 @@ import { CustomGamesModule } from './routes/custom_games/custom_games.module';
 import { FriendsController } from './routes/friends/friends.controller';
 import { FriendsModule } from './routes/friends/friends.module';
 import { LoginModule } from './routes/login/login.module';
+import { PromotionsModule } from './routes/promotions/promotions.module';
 import { UsersController } from './routes/users/users.controller';
 import { UsersModule } from './routes/users/users.module';
+import { BugReportModule } from './routes/bug-report/bug-report.module';
 
 @Module({
   imports: [
@@ -17,6 +19,8 @@ import { UsersModule } from './routes/users/users.module';
     LoginModule,
     CustomGamesModule,
     FriendsModule,
+    PromotionsModule,
+    BugReportModule,
   ],
   controllers: [],
   providers: [],
@@ -29,8 +33,10 @@ export class AppModule {
         { path: 'users', method: RequestMethod.POST },
         { path: 'users', method: RequestMethod.GET },
       )
-      .forRoutes(UsersController, CustomGamesController);
+      .forRoutes(UsersController);
 
-    consumer.apply(ensureAuthMiddleware).forRoutes(FriendsController);
+    consumer
+      .apply(ensureAuthMiddleware)
+      .forRoutes(FriendsController, CustomGamesController);
   }
 }

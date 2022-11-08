@@ -14,7 +14,7 @@ import {
   userShape,
 } from './mocks/user/index';
 
-describe('AppController (e2e)', () => {
+describe('Integration Tests: Users Routes', () => {
   let app: INestApplication;
   let prisma: PrismaService;
 

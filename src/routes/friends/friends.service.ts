@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { CreateFriendDto } from './dto/create-friend.dto';
 
 @Injectable()
@@ -49,7 +49,7 @@ export class FriendsService {
   }
 
   async findAllFriendsByUser(id: string) {
-    return await this.prisma.user.findUnique({
+    const friends = await this.prisma.user.findUnique({
       where: {
         id,
       },
@@ -57,31 +57,50 @@ export class FriendsService {
         friends: true,
       },
     });
+    return { ...friends, password: undefined };
   }
 
-  async findOne(id: string) {
-    const friend = this.prisma.user.findFirst({
+  async findOne(id: string, userId: string) {
+    const user = await this.prisma.user.findUnique({
       where: {
-        id: id,
+        id: userId,
+      },
+      include: { friends: true },
+    });
+
+    if (!user.friends.find((friend) => friend.friendId === id)) {
+      throw new NotFoundException(
+        "Friend not found or the user's not your friend",
+      );
+    }
+
+    const friend = await this.prisma.user.findUnique({
+      where: {
+        id,
       },
     });
 
-    if (!friend) {
-      throw new NotFoundException('Friend not found');
-    }
-
-    return friend;
+    return { ...friend, password: undefined };
   }
 
-  async remove(id: string) {
+  async remove(id: string, userId: string) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      include: { friends: true },
+    });
+
     const friend = await this.prisma.friends.findFirst({
       where: {
         friendId: id,
       },
     });
 
-    if (!friend) {
-      throw new NotFoundException('Friend not found');
+    if (!friend || !user.friends.find((friend) => friend.friendId === id)) {
+      throw new NotFoundException(
+        "Friend not found or the user's not your friend",
+      );
     }
 
     await this.prisma.friends.delete({

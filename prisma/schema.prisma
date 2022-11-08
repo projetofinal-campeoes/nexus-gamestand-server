@@ -23,6 +23,7 @@ model User {
   friends      Friends[]
   promotions   Promotions[]
   custom_games Custom_games[]
+  bug_report   Bug_report[]
 
   @@map("user")
 }
@@ -49,9 +50,35 @@ model Custom_games {
 }
 
 model Promotions {
-  id     String  @id @default(uuid())
-  User   User?   @relation(fields: [userId], references: [id])
-  userId String?
+  id          String  @id @default(uuid())
+  name        String  @db.VarChar(64)
+  price       Decimal @db.Decimal(5, 2)
+  promo_url   String
+  description String? @db.VarChar(256)
+  shiny_meter Int     @default(0)
+  User        User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  rate_log    Rate_log[]
 
   @@map("promotions")
+}
+
+model Rate_log {
+    id          String @id @default(uuid())
+    user_id     String
+    like        Boolean
+    Promotion   Promotions @relation(fields: [promotionId], references: [id], onDelete: Cascade)
+    promotionId String
+
+    @@map("rate_log")
+}
+
+model Bug_report {
+    id          String @id @default(uuid())
+    page        String @db.VarChar(24)
+    description String @db.VarChar(256)
+    User        User   @relation(fields: [userId], references: [id])
+    userId      String
+
+    @@map("bug_report")
 }

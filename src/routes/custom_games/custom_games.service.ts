@@ -1,70 +1,81 @@
-import { BadRequestException, NotFoundException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  NotFoundException,
+  Injectable,
+} from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateCustomGameDto } from './dto/create-custom_game.dto';
 import { UpdateCustomGameDto } from './dto/update-custom_game.dto';
 
 @Injectable()
 export class CustomGamesService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
-  async create(CreateCustomGameDto: CreateCustomGameDto, id:string) {
+  async create(CreateCustomGameDto: CreateCustomGameDto, id: string) {
     const { name } = CreateCustomGameDto;
 
-    const alreadyExistingName = await this.prisma.custom_games.findFirst({
+    const findUser = await this.prisma.user.findUnique({
       where: {
-        name,
-      },
-    })
+        id
+      }, include: {
+        custom_games: true
+      }
+    });
 
-    if (alreadyExistingName) {
-      throw new BadRequestException('This game already exists')
+    const alreadyExistingGame = findUser.custom_games.find(elem => elem.name === name)
+
+    if (alreadyExistingGame) {
+      throw new BadRequestException('This game already exists');
     }
 
     const newGame = await this.prisma.custom_games.create({
-      data:{...CreateCustomGameDto, userId:id},
+      data: { ...CreateCustomGameDto, userId: id },
     });
     return newGame;
   }
 
-  async findAll() {
-    return this.prisma.custom_games.findMany()
-  }
-
   async findOne(id: string) {
-  
-    const game = await this.prisma.custom_games.findUnique({where: { id }})
+    const game = await this.prisma.custom_games.findUnique({ where: { id } });
 
-    if(!game) {
+    if (!game) {
       throw new NotFoundException('Game does not exists!');
     }
 
-    return game
+    return game;
+  }
+  async findAllGamesByUserId(id: string) {
+    return await this.prisma.user.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        custom_games: true,
+      },
+    });
   }
 
-  async update(id: string, updateCustomGameDto: UpdateCustomGameDto) {  
-    const { name, image_url,platform } = updateCustomGameDto
-    const game = await this.prisma.custom_games.findUnique({where: { id }})
+  async update(id: string, updateCustomGameDto: UpdateCustomGameDto) {
+    const { name, image_url, platform } = updateCustomGameDto;
+    const game = await this.prisma.custom_games.findUnique({ where: { id } });
 
-    if(!game) {
+    if (!game) {
       throw new NotFoundException('Game does not exists!');
     }
-    
-    await this.prisma.custom_games.update({
+
+    const gameUpdate = await this.prisma.custom_games.update({
       where: { id },
-      data: { name, image_url, platform }
-    })
-
-    const gameUpdate = await this.prisma.custom_games.findUnique({where: { id }})
-
-    return gameUpdate
+      data: { name, image_url, platform },
+    });
+    
+    return gameUpdate;
   }
 
   async delete(id: string) {
     const deleteById = await this.prisma.custom_games.findUnique({
       where: {
-        id
+        id,
       },
-    })
+    });
 
     if (!deleteById) {
       throw new NotFoundException('Game does not exists!');
@@ -73,9 +84,9 @@ export class CustomGamesService {
     await this.prisma.custom_games.delete({
       where: {
         id,
-      }
-    })
+      },
+    });
 
-    return deleteById
+    return deleteById;
   }
 }
