@@ -3,6 +3,7 @@ import {
   IsOptional,
   IsString,
   Length,
+  MinLength,
 } from 'class-validator';
 
 export class CreateCustomGameDto {
@@ -10,7 +11,7 @@ export class CreateCustomGameDto {
   id: string;
 
   @IsString()
-  @Length(3, 30)
+  @MinLength(3)
   @ApiProperty()
   name: string;
 

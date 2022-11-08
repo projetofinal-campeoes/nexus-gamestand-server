@@ -62,15 +62,11 @@ export class CustomGamesService {
       throw new NotFoundException('Game does not exists!');
     }
 
-    await this.prisma.custom_games.update({
+    const gameUpdate = await this.prisma.custom_games.update({
       where: { id },
       data: { name, image_url, platform },
     });
-
-    const gameUpdate = await this.prisma.custom_games.findUnique({
-      where: { id },
-    });
-
+    
     return gameUpdate;
   }
 

@@ -4,8 +4,10 @@ import { BugReportService } from './bug-report.service';
 import { CreateBugReportDto } from './dto/create-bug-report.dto';
 import { HttpCode } from '@nestjs/common'
 import { SkipThrottle } from '@nestjs/throttler';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('bug-report')
+@ApiTags('bug-report')
+@Controller('bug_report')
 export class BugReportController {
   constructor(private readonly bugReportService: BugReportService) {}
 

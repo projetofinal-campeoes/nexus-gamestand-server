@@ -45,3 +45,9 @@ export const customGamesShape = expect.objectContaining({
   platform: expect.any(String),
   userId: expect.any(String),
 });
+
+export const patchedGames = {
+  name: 'Counter-Strike versão Sudrelizada',
+  image_url: 'test',
+  platform: 'steam'
+}

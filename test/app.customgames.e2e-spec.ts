@@ -10,11 +10,14 @@ import {
   customGameTest,
   loginTest,
   loginTest2,
+  patchedGames,
 } from './mocks/custom_games';
 
 describe('Integration Tests: Custom Games Routes', () => {
   let app: INestApplication;
   let prisma: PrismaService;
+  let customGame
+  let token: string
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -38,18 +41,17 @@ describe('Integration Tests: Custom Games Routes', () => {
       const response = await request(app.getHttpServer())
         .post('/login')
         .send(loginTest);
+        token = response.body.token
       const { status, body } = await request(app.getHttpServer())
         .post('/custom_games')
         .send(customGameTest[0])
-        .set('Authorization', `Bearer ${response.body.token}`);
+        .set('Authorization', `Bearer ${token}`);
+        customGame = body
       expect(status).toBe(201);
       expect(body).toStrictEqual(customGamesShape);
     });
 
     it('Should not be able to create a custom game without token', async () => {
-      const response = await request(app.getHttpServer())
-        .post('/login')
-        .send(loginTest);
       const { status, body } = await request(app.getHttpServer())
         .post('/custom_games')
         .send(customGameTest[0])
@@ -60,59 +62,47 @@ describe('Integration Tests: Custom Games Routes', () => {
     });
 
     it('Should not be able to with the same custom game name', async () => {
-      const response = await request(app.getHttpServer())
-        .post('/login')
-        .send(loginTest);
       const { status, body } = await request(app.getHttpServer())
         .post('/custom_games')
         .send(customGameTest[0])
-        .set('Authorization', `Bearer ${response.body.token}`);
+        .set('Authorization', `Bearer ${token}`);
 
       expect(status).toBe(400);
       expect(body).toHaveProperty('message');
     });
 
     it('Should not be able to create a custom game with incorrect body', async () => {
-      const response = await request(app.getHttpServer())
-        .post('/login')
-        .send(loginTest);
       const { status, body } = await request(app.getHttpServer())
         .post('/custom_games')
         .send(customGameTest[1])
-        .set('Authorization', `Bearer ${response.body.token}`);
+        .set('Authorization', `Bearer ${token}`);
 
       expect(status).toBe(400);
       expect(body).toHaveProperty('message');
     });
 
     it('Should not be able to create a custom game name lower than 3 characters', async () => {
-      const response = await request(app.getHttpServer())
-        .post('/login')
-        .send(loginTest);
       const { status, body } = await request(app.getHttpServer())
         .post('/custom_games')
         .send(customGameTest[1])
-        .set('Authorization', `Bearer ${response.body.token}`);
+        .set('Authorization', `Bearer ${token}`);
 
       expect(status).toBe(400);
       expect(body).toHaveProperty('message');
     });
 
     it('Should not be able to create a custom game with invalid platform', async () => {
-      const response = await request(app.getHttpServer())
-        .post('/login')
-        .send(loginTest);
       const { status, body } = await request(app.getHttpServer())
         .post('/custom_games')
         .send(customGameTest[2])
-        .set('Authorization', `Bearer ${response.body.token}`);
+        .set('Authorization', `Bearer ${token}`);
 
       expect(status).toBe(400);
       expect(body).toHaveProperty('message');
     });
   });
 
-  describe('GET ---> /custom_games', () => {
+  describe('GET ---> /custom_games/users', () => {
     it('Should not be able to show custom games by user with incorrect token', async () => {
       const { status, body } = await request(app.getHttpServer())
         .get('/custom_games/users')
@@ -135,12 +125,9 @@ describe('Integration Tests: Custom Games Routes', () => {
     });
 
     it('Should be able to show all games from user by ID', async () => {
-      const response = await request(app.getHttpServer())
-        .post('/login')
-        .send(loginTest);
       const { status, body } = await request(app.getHttpServer())
         .get('/custom_games/users')
-        .set('Authorization', `Bearer ${response.body.token}`);
+        .set('Authorization', `Bearer ${token}`);
       expect(status).toBe(200);
       expect(body).toHaveProperty('custom_games');
       expect(body.custom_games).toStrictEqual(
@@ -150,14 +137,13 @@ describe('Integration Tests: Custom Games Routes', () => {
 
     it('Should be able to show game by game ID', async () => {
       const response = await request(app.getHttpServer())
-        .post('/login')
-        .send(loginTest);
-      const response2 = await request(app.getHttpServer())
         .get('/custom_games/users')
-        .set('Authorization', `Bearer ${response.body.token}`);
+        .set('Authorization', `Bearer ${token}`);
       const { status, body } = await request(app.getHttpServer())
-        .get(`/custom_games/games/${response2.body.custom_games[0].id}`)
-        .set('Authorization', `Bearer ${response.body.token}`);
+ tests/customgames
+        .get(`/custom_games/games/${response.body.custom_games[0].id}`)
+        .set('Authorization', `Bearer ${token}`);
+
       expect(status).toBe(200);
       expect(body).toStrictEqual(customGamesShape);
     });
@@ -174,14 +160,52 @@ describe('Integration Tests: Custom Games Routes', () => {
     });
 
     it('Should be able to update games with valid token', async () => {
-      const { status, body } = await request(app.getHttpServer())
+      const response = await request(app.getHttpServer())
         .get('/custom_games/users')
+        .set('Authorization', `Bearer ${token}`);
+
+      const { status, body } = await request(app.getHttpServer())
+        .patch(`/custom_games/${response.body.custom_games[0].id}`).send(patchedGames)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(status).toBe(200);
+      expect(body).toStrictEqual(customGamesShape)
+      expect(body.name).toStrictEqual(patchedGames.name)
+      expect(body.platform).toStrictEqual(patchedGames.platform)
+    });
+
+    it('Should not be able to update games with invalid name', async () => {
+
+      const response = await request(app.getHttpServer())
+        .get('/custom_games/users')
+        .set('Authorization', `Bearer ${token}`);
+
+      const { status, body } = await request(app.getHttpServer())
+        .patch(`/custom_games/${response.body.custom_games[0].id}`).send(customGameTest[1])
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(status).toBe(400);
+      expect(body).toHaveProperty('message')
+    });    
+  });
+
+  describe('DELETE ---> /custom_games/:id', () => {     
+    it('Should not be able to delete games with invalid token', async () => {
+      const { status, body } = await request(app.getHttpServer())
+        .delete(`/custom_games/${customGame.id}`)
         .set('Authorization', `Bearer`);
 
       expect(status).toBe(401);
       expect(body).toHaveProperty('message');
     });
-    
-    
-  });
+
+    it('Should be able to delete games with valid token', async () => {
+      const { status, body } = await request(app.getHttpServer())
+        .delete(`/custom_games/${customGame.id}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(status).toBe(204);
+      expect(body).toMatchObject({})
+    });
+  })
 });
