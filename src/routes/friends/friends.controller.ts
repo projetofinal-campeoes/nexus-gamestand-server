@@ -55,6 +55,8 @@ export class FriendsController {
   async remove(@Param('id') id: string, @Req() req: Request) {
     const { id: userId } = req.user;
 
+    console.log(userId);
+
     await this.friendsService.remove(id, userId);
   }
 }
