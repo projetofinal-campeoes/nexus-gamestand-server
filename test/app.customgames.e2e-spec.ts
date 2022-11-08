@@ -140,7 +140,6 @@ describe('Integration Tests: Custom Games Routes', () => {
         .get('/custom_games/users')
         .set('Authorization', `Bearer ${token}`);
       const { status, body } = await request(app.getHttpServer())
- tests/customgames
         .get(`/custom_games/games/${response.body.custom_games[0].id}`)
         .set('Authorization', `Bearer ${token}`);
 
