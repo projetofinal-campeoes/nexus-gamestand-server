@@ -60,29 +60,47 @@ export class FriendsService {
     return { ...friends, password: undefined };
   }
 
-  async findOne(id: string) {
-    const friend = await this.prisma.user.findUnique({
+  async findOne(id: string, userId: string) {
+    const user = await this.prisma.user.findUnique({
       where: {
-        id: id,
+        id: userId,
       },
+      include: { friends: true },
     });
 
-    if (!friend) {
-      throw new NotFoundException('Friend not found');
+    if (!user.friends.find((friend) => friend.friendId === id)) {
+      throw new NotFoundException(
+        "Friend not found or the user's not your friend",
+      );
     }
+
+    const friend = await this.prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
 
     return { ...friend, password: undefined };
   }
 
-  async remove(id: string) {
+  async remove(id: string, userId: string) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      include: { friends: true },
+    });
+
     const friend = await this.prisma.friends.findFirst({
       where: {
         friendId: id,
       },
     });
 
-    if (!friend) {
-      throw new NotFoundException('Friend not found');
+    if (!friend || !user.friends.find((friend) => friend.friendId === id)) {
+      throw new NotFoundException(
+        "Friend not found or the user's not your friend",
+      );
     }
 
     await this.prisma.friends.delete({

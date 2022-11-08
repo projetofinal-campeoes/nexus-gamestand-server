@@ -20,6 +20,15 @@ export const fakeUsers = [
     steam_user: 'luwny',
     gamepass: true,
   },
+  {
+    id: '7f82fe18-737e-44bb-9bba-067e3583337b',
+    username: 'mathsudre',
+    avatar_url: 'https://avatars.githubusercontent.com/u/100591242?v=4',
+    email: 'math@email.com',
+    password: hashSync('Teste@123', 10),
+    steam_user: 'mathsudre',
+    gamepass: true,
+  },
 ];
 
 export const invalidCredentials = {
@@ -35,6 +44,16 @@ export const loginUser = {
 export const addFriend = {
   username: 'luwny',
 };
+
+export const invalidFriend = {
+  username: 'Teste@123',
+};
+
+export const errorShape = expect.objectContaining({
+  statusCode: expect.any(Number),
+  message: expect.any(String),
+  error: expect.any(String),
+});
 
 export const userShape = expect.objectContaining({
   id: expect.any(String),

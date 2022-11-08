@@ -34,15 +34,18 @@ export class UsersService {
       },
     });
 
-    return newUser;
+    return { ...newUser, password: undefined };
   }
 
   async findAll() {
-    return await this.prisma.user.findMany();
+    const allUsers = await this.prisma.user.findMany();
+
+    return allUsers.map((user) => ({ ...user, password: undefined }));
   }
 
   async findOne(id: string) {
-    return await this.prisma.user.findUnique({ where: { id } });
+    const findOneUser = await this.prisma.user.findUnique({ where: { id } });
+    return { ...findOneUser, password: undefined };
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
