@@ -1,20 +1,21 @@
 import { hashSync } from 'bcryptjs';
 
-export const fakeUsersLogin = [
+export const fakeUsers = [
   {
-    id: '7f82fe18-737e-44bb-9bba-067e3583337l',
-    username: 'math',
-    avatar_url: 'https://avatars.githubusercontent.com/u/100591242?v=4',
-    email: 'matheus@email.com',
+    id: '8948a669-189a-411d-8d6f-3b8124bd12bb',
+    username: 'sid',
+    avatar_url: 'https://avatars.githubusercontent.com/u/100426215?v=4',
+    email: 'sid@email.com',
     password: hashSync('Teste@123', 10),
-    steam_user: 'mathsudre',
+    status: true,
+    steam_user: 'poteito9',
     gamepass: true,
   },
   {
-    id: '4c9c9f63-5374-4e9d-bec9-990fd49405da',
-    username: 'luw',
+    id: '4c9c9f63-5374-4e9d-bec9-990fd49405dc',
+    username: 'luwny',
     avatar_url: 'https://avatars.githubusercontent.com/u/93692439?v=4',
-    email: 'adao@email.com',
+    email: 'adam@email.com',
     password: hashSync('Teste@123', 10),
     steam_user: 'luwny',
     gamepass: true,
@@ -27,12 +28,12 @@ export const invalidCredentials = {
 };
 
 export const loginUser = {
-  email: 'matheus@email.com',
+  email: 'sid@email.com',
   password: 'Teste@123',
 };
 
 export const addFriend = {
-  username: 'luw',
+  username: 'luwny',
 };
 
 export const userShape = expect.objectContaining({
@@ -40,26 +41,11 @@ export const userShape = expect.objectContaining({
   username: expect.any(String),
   avatar_url: expect.any(String),
   email: expect.any(String),
-  password: expect.any(String),
   status: expect.any(Boolean),
   steam_user: expect.any(String),
   gamepass: expect.any(Boolean),
   created_at: expect.any(String),
   updated_at: expect.any(String),
-});
-
-export const userWithFriendsShape = expect.objectContaining({
-  id: expect.any(String),
-  username: expect.any(String),
-  avatar_url: expect.any(String),
-  email: expect.any(String),
-  password: expect.any(String),
-  status: expect.any(Boolean),
-  steam_user: expect.any(String),
-  gamepass: expect.any(Boolean),
-  created_at: expect.any(String),
-  updated_at: expect.any(String),
-  friends: expect.any(Object),
 });
 
 export const friendsShape = expect.objectContaining({
@@ -67,4 +53,17 @@ export const friendsShape = expect.objectContaining({
   userId: expect.any(String),
   friendId: expect.any(String),
   friendName: expect.any(String),
+});
+
+export const userWithFriendsShape = expect.objectContaining({
+  id: expect.any(String),
+  username: expect.any(String),
+  avatar_url: expect.any(String),
+  email: expect.any(String),
+  status: expect.any(Boolean),
+  steam_user: expect.any(String),
+  gamepass: expect.any(Boolean),
+  created_at: expect.any(String),
+  updated_at: expect.any(String),
+  friends: expect.any(Array),
 });

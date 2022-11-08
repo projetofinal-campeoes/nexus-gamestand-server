@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { PrismaService } from '../../prisma/prisma.service'
+import { PrismaService } from '../../prisma/prisma.service';
 import { CreateFriendDto } from './dto/create-friend.dto';
 
 @Injectable()
@@ -49,7 +49,7 @@ export class FriendsService {
   }
 
   async findAllFriendsByUser(id: string) {
-    return await this.prisma.user.findUnique({
+    const friends = await this.prisma.user.findUnique({
       where: {
         id,
       },
@@ -57,10 +57,11 @@ export class FriendsService {
         friends: true,
       },
     });
+    return { ...friends, password: undefined };
   }
 
   async findOne(id: string) {
-    const friend = this.prisma.user.findFirst({
+    const friend = await this.prisma.user.findUnique({
       where: {
         id: id,
       },
@@ -70,7 +71,7 @@ export class FriendsService {
       throw new NotFoundException('Friend not found');
     }
 
-    return friend;
+    return { ...friend, password: undefined };
   }
 
   async remove(id: string) {
