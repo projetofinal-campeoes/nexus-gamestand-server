@@ -4,6 +4,7 @@ import {
   IsEmail,
   IsOptional,
   IsString,
+  IsUrl,
   Length,
   Matches,
 } from 'class-validator';
@@ -16,6 +17,7 @@ export class CreateUserDto {
 
   @IsString()
   @IsOptional()
+  @IsUrl()
   @ApiProperty({ required: false })
   avatar_url: string;
 
