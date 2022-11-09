@@ -37,6 +37,14 @@ export class PromotionsService {
     });
   }
 
+  async getUserPromotions(userId: string) {
+    return await this.prisma.promotions.findMany({
+        where: {
+            userId
+        }
+    });
+  }
+
   async update(id: string, updatePromotionDto: UpdatePromotionDto) {
     const updatedPromotion = await this.prisma.promotions.update({
         where: {
