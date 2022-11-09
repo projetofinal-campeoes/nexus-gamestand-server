@@ -24,6 +24,12 @@ export class PromotionsController {
   }
 
   @SkipThrottle()
+  @Get('/owned')
+  getUserPromotions(@Req() request: Request) {
+    return this.promotionsService.getUserPromotions(request.user.id);
+  }
+
+  @SkipThrottle()
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePromotionDto: UpdatePromotionDto) {
     return this.promotionsService.update(id, updatePromotionDto);

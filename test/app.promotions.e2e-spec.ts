@@ -74,6 +74,22 @@ describe('PromotionsController (e2e)', () => {
     })
   })
 
+  describe('GET ---> /promotions/owned', () => {
+    it('Should be able to list all owned promotion', async () => {
+        const { status, body } = await request(app.getHttpServer()).get('/promotions/owned').set('Authorization', `Bearer ${token}`)
+        
+        expect(status).toBe(200)
+        expect(body).toHaveLength(1)
+    })
+
+    it('Should not be able to list all owned promotion without token', async () => {
+        const { status, body } = await request(app.getHttpServer()).get('/promotions/owned')
+        
+        expect(status).toBe(401)
+        expect(body).toHaveProperty('message')
+    })
+  })
+
   describe('PATCH ---> /promotions/:id', () => {
     it('Should be able to update only owned promotion', async () => {
         const { status, body } = await request(app.getHttpServer()).patch(`/promotions/${promotion.id}`).send(promotionUpdatedData).set('Authorization', `Bearer ${token}`)
