@@ -1,4 +1,4 @@
-<h1 align="center"> NEXUS GAMES STAND - API</h1>
+<h1 align="center"> NEXUS GAMES STAND - API * DESATUALIZADO * </h1>
 
 <p align="center">Este é o backend da aplicação Nexus Games Stand - um hub de plataformas de jogos para o usuário! O objetivo dessa aplicação é conseguir criar um frontend de qualidade, que mostrará ao usuário todos os jogos que ele possui em todas as plataformas, possibilitando busca por nome e outros filtros.</p>
 
