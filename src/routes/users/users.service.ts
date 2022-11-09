@@ -49,13 +49,14 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    const { username, email } = updateUserDto;
+    const { username, email, avatar_url } = updateUserDto;
 
     const updatedUser = await this.prisma.user.update({
       where: { id },
       data: {
         username,
         email,
+        avatar_url,
         password: hashSync(updateUserDto.password, 10),
       },
     });
