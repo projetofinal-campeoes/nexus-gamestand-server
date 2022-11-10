@@ -34,6 +34,8 @@ model Friends {
   User       User?   @relation(fields: [userId], references: [id])
   friendId   String
   friendName String?
+  friendAvatar String?
+  friendStatus Boolean?
 
   @@map("friends")
 }

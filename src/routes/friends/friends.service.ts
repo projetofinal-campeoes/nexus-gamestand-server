@@ -40,6 +40,8 @@ export class FriendsService {
         userId: id,
         friendId: user.id,
         friendName: user.username,
+        friendAvatar: user.avatar_url,
+        friendStatus: user.status
       },
     });
 
