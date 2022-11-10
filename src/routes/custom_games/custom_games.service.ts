@@ -1,7 +1,7 @@
 import {
   BadRequestException,
-  NotFoundException,
   Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateCustomGameDto } from './dto/create-custom_game.dto';
@@ -16,13 +16,16 @@ export class CustomGamesService {
 
     const findUser = await this.prisma.user.findUnique({
       where: {
-        id
-      }, include: {
-        custom_games: true
-      }
+        id,
+      },
+      include: {
+        custom_games: true,
+      },
     });
 
-    const alreadyExistingGame = findUser.custom_games.find(elem => elem.name === name)
+    const alreadyExistingGame = findUser.custom_games.find(
+      (elem) => elem.name === name,
+    );
 
     if (alreadyExistingGame) {
       throw new BadRequestException('This game already exists');
@@ -44,7 +47,7 @@ export class CustomGamesService {
     return game;
   }
   async findAllGamesByUserId(id: string) {
-    return await this.prisma.user.findUnique({
+    const findUserWithGames = await this.prisma.user.findUnique({
       where: {
         id,
       },
@@ -52,6 +55,7 @@ export class CustomGamesService {
         custom_games: true,
       },
     });
+    return { ...findUserWithGames, password: undefined };
   }
 
   async update(id: string, updateCustomGameDto: UpdateCustomGameDto) {
@@ -66,7 +70,7 @@ export class CustomGamesService {
       where: { id },
       data: { name, image_url, platform },
     });
-    
+
     return gameUpdate;
   }
 
