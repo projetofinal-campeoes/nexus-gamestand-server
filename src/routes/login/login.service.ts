@@ -30,6 +30,10 @@ export class LoginService {
       { expiresIn: '24h', subject: accountEmail.id },
     );
 
-    return { token: token };
+    const id = {
+      ...accountEmail, password: undefined
+    }
+
+    return { token: token, user: id };
   }
 }
