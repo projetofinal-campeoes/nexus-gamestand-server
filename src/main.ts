@@ -30,7 +30,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Nexus User')
-    .setDescription('Test User Nexus Creation')
+    .setDescription('Api Swagger Nexus GamesStand')
     .setVersion('0.1')
     .addBearerAuth(undefined, 'defaultBearerAuth')
     .build();
