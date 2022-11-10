@@ -4,7 +4,7 @@ import { Friends } from '@prisma/client';
 export class FriendEntity implements Friends {
   @ApiProperty()
   id: string;
-
+  
   @ApiProperty()
   userId: string;
 
@@ -13,4 +13,10 @@ export class FriendEntity implements Friends {
 
   @ApiProperty()
   friendName: string;
+
+  @ApiProperty()
+  friendAvatar: string;
+
+  @ApiProperty()
+  friendStatus: boolean;
 }

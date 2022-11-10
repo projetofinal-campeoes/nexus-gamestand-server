@@ -72,6 +72,8 @@ export const friendsShape = expect.objectContaining({
   userId: expect.any(String),
   friendId: expect.any(String),
   friendName: expect.any(String),
+  friendAvatar: expect.any(String),
+  friendStatus: expect.any(Boolean),
 });
 
 export const userWithFriendsShape = expect.objectContaining({

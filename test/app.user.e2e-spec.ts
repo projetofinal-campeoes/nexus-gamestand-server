@@ -80,6 +80,10 @@ describe('Integration Tests: Users Routes', () => {
       expect(status).toBe(200);
       expect(body).toStrictEqual(userShape);
       expect(body.id).toEqual(fakeUsers[0].id);
+      expect(body).toHaveProperty('friends');
+      expect(body).toHaveProperty('promotions');
+      expect(body).toHaveProperty('custom_games');
+      expect(body).toHaveProperty('bug_report');
     });
   });
 
