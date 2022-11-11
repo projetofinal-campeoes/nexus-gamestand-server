@@ -28,7 +28,7 @@ import { BugReportModule } from './routes/bug-report/bug-report.module';
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(ensureAuthMiddleware, ensureOwnerMiddleware)
+      .apply(ensureAuthMiddleware)
       .exclude(
         { path: 'users', method: RequestMethod.POST },
         { path: 'users', method: RequestMethod.GET },
