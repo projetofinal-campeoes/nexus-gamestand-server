@@ -3,7 +3,12 @@ import { User } from '@prisma/client';
 import { hashSync } from 'bcryptjs';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import {
+  UpdateUserAvatarDto,
+  UpdateUserDto,
+  UpdateUserPassword,
+  UpdateUserSteam,
+} from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -57,14 +62,23 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    const { username, email, avatar_url } = updateUserDto;
+    const { username, email } = updateUserDto;
 
     const updatedUser = await this.prisma.user.update({
       where: { id },
       data: {
         username,
         email,
-        avatar_url,
+      },
+    });
+
+    return { ...updatedUser, password: undefined };
+  }
+
+  async updatePassword(id: string, updateUserDto: UpdateUserPassword) {
+    const updatedUser = await this.prisma.user.update({
+      where: { id },
+      data: {
         password: hashSync(updateUserDto.password, 10),
       },
     });
@@ -72,12 +86,26 @@ export class UsersService {
     return { ...updatedUser, password: undefined };
   }
 
-  async updateStatus(id: string, updateUserDto: UpdateUserDto) {
-    const { status } = updateUserDto;
+  async updateUserAvatar(id: string, updateUserDto: UpdateUserAvatarDto) {
+    const { avatar_url } = updateUserDto;
+
+    const updatedUser = await this.prisma.user.update({
+      where: { id },
+      data: {
+        avatar_url,
+      },
+    });
+
+    return { ...updatedUser, password: undefined };
+  }
+
+  async updateStatus(id: string) {
+    const findUser = await this.prisma.user.findUnique({ where: { id } });
+
     const updatedUserStatus = await this.prisma.user.update({
       where: { id },
       data: {
-        status,
+        status: !findUser.status,
       },
     });
 
@@ -88,7 +116,7 @@ export class UsersService {
     };
   }
 
-  async updateSteamUser(id: string, updateUserDto: UpdateUserDto) {
+  async updateSteamUser(id: string, updateUserDto: UpdateUserSteam) {
     const { steam_user } = updateUserDto;
 
     const updatedUserSteam = await this.prisma.user.update({
@@ -105,18 +133,19 @@ export class UsersService {
     };
   }
 
-  async updateGamePass(id: string, updateUserDto: UpdateUserDto) {
-    const { gamepass } = updateUserDto;
-    const updatedGamePassUser = await this.prisma.user.update({
+  async updateGamePass(id: string) {
+    const findUser = await this.prisma.user.findUnique({ where: { id } });
+
+    const updatedUserStatus = await this.prisma.user.update({
       where: { id },
       data: {
-        gamepass,
+        gamepass: !findUser.gamepass,
       },
     });
 
     return {
       user: {
-        gamepass: updatedGamePassUser.gamepass,
+        gamepass: updatedUserStatus.gamepass,
       },
     };
   }
